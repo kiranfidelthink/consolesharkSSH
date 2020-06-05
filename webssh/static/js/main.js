@@ -65,6 +65,8 @@ jQuery(function($){
 
 
   function store_items(names, data) {
+    console.log("names", names)
+    console.log("data", data)
     var i, name, value;
 
     for (i = 0; i < names.length; i++) {
@@ -107,6 +109,7 @@ jQuery(function($){
 
 
   function decode_uri(uri) {
+    console.log("decode uri", uri)
     try {
       return decodeURI(uri);
     } catch(e) {
@@ -127,6 +130,11 @@ jQuery(function($){
 
 
   function parse_url_data(string, form_keys, opts_keys, form_map, opts_map) {
+    console.log("string", string)
+    console.log("form_keys", form_keys)
+    console.log("opts_keys",opts_keys)
+    console.log("form_map", form_map)
+    console.log("opts_map",opts_map)
     var i, pair, key, val,
         arr = string.split('&');
 
@@ -375,7 +383,7 @@ jQuery(function($){
       console.log('Unable to detect the default encoding of your server');
       msg.encoding = encoding;
     } else {
-      console.log('The deault encoding of your server is ' + msg.encoding);
+      console.log('The deault encoding of your server issssssss ' + msg.encoding);
     }
 
     function term_write(text) {
@@ -591,7 +599,7 @@ jQuery(function($){
         errors = [], size;
 
     if (!hostname) {
-      errors.push('Value of hostname is required.');
+      errors.push('Value of hostname is required.....');
     } else {
       if (!hostname_tester.test(hostname)) {
          errors.push('Invalid hostname: ' + hostname);
@@ -649,6 +657,8 @@ jQuery(function($){
 
 
   function connect_without_options() {
+    console.log("names------")
+
     // use data from the form
     var form = document.querySelector(form_id),
         inputs = form.querySelectorAll('input[type="file"]'),
@@ -698,6 +708,8 @@ jQuery(function($){
 
 
   function connect_with_options(data) {
+    console.log("data1", data)
+
     // use data from the arguments
     var form = document.querySelector(form_id),
         url = data.url || form.action,
@@ -708,7 +720,8 @@ jQuery(function($){
       log_status(result.errors.join('\n'));
       return;
     }
-
+console.log("data----", data)
+console.log("form_id", form_id)
     data.term = term_type.val();
     data._xsrf = _xsrf.value;
     if (event_origin) {
@@ -730,8 +743,15 @@ jQuery(function($){
 
 
   function connect(hostname, port, username, password, privatekey, passphrase, totp) {
+    console.log("Inside connect fucntion ")
+    console.log("hostname----", hostname)
+    console.log("port----", port)
+    console.log("username----", username)
+    console.log("password----", hostname)
+    console.log("privatekey----", privatekey)
     // for console use
     var result, opts;
+    // result = connect_with_options(opts);
 
     if (state !== DISCONNECTED) {
       console.log(messages[state]);
@@ -739,9 +759,12 @@ jQuery(function($){
     }
 
     if (hostname === undefined) {
+      console.log("Inside hostname null")
       result = connect_without_options();
     } else {
       if (typeof hostname === 'string') {
+      console.log("Inside hostname not null")
+
         opts = {
           hostname: hostname,
           port: port,
@@ -771,8 +794,10 @@ jQuery(function($){
   wssh.connect = connect;
 
   $(form_id).submit(function(event){
+    console.log("Inside submit------------------")
+
     event.preventDefault();
-    connect();
+    // connect();
   });
 
 
@@ -817,8 +842,8 @@ jQuery(function($){
     decode_uri(window.location.search.substring(1)) + '&' + decode_uri(window.location.hash.substring(1)),
     form_keys, opts_keys, url_form_data, url_opts_data
   );
-  // console.log(url_form_data);
-  // console.log(url_opts_data);
+  console.log("url_form_data", url_form_data);
+  console.log("url_opts_data", url_opts_data);
 
   if (url_opts_data.term) {
     term_type.val(url_opts_data.term);
@@ -829,7 +854,7 @@ jQuery(function($){
   } else {
     if (get_object_length(url_form_data)) {
       waiter.show();
-      connect(url_form_data);
+      // connect(url_form_data);
     } else {
       restore_items(fields);
       form_container.show();

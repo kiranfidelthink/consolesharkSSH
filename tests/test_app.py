@@ -443,7 +443,7 @@ class TestAppBasic(TestAppBase):
         self.body_dict.update(username='keyonly', password='foo')
         response = yield self.async_post('/', self.body_dict)
         self.assertEqual(response.code, 200)
-        self.assert_status_in('Bad authentication type', json.loads(to_str(response.body))) # noqa
+        self.assert_status_in('Bad authentication type test_app', json.loads(to_str(response.body))) # noqa
 
     @tornado.testing.gen_test
     def test_app_with_user_pass2fa_with_correct_passwords(self):

@@ -26,10 +26,7 @@
       margin-left: 5px;
     }
 
-      {
-      % if font.family %
-    }
-
+    /* {% if font.family %} */
     @font-face {
       font-family: '{{ font.family }}';
       src: url('{{ font.url }}');
@@ -39,9 +36,7 @@
       font-family: '{{ font.family }}';
     }
 
-      {
-      % end %
-    }
+    /* {% end %} */
   </style>
 </head>
 
@@ -49,21 +44,21 @@
   <div id="waiter" style="display: none"> Connecting ... </div>
 
   <div class="container form-container" style="display: none">
-    <form id="connect" action="" method="post" enctype="multipart/form-data" {% if debug %} novalidate{% end %} hidden>
+    <form id="connect" action="" method="post" enctype="multipart/form-data" {% if debug %} novalidate{% end %}>
       <div class="row">
         <div class="col">
-          <label for="Hostname">Hostname</label>
-          <input class="form-control" type="text" id="hostname" name="hostname" value="" required>
+          <label for="Hostname">Hostnamess</label>
+          <input class="form-control" type="text" id="hostname" name="hostname" value="hostname" required>
         </div>
         <div class="col">
           <label for="Port">Port</label>
-          <input class="form-control" type="number" id="port" name="port" placeholder="22" value="" min=1 max=65535>
+          <input class="form-control" type="number" id="port" name="port" placeholder="22" value="port" min=1 max=65535>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <label for="Username">Username</label>
-          <input class="form-control" type="text" id="username" name="username" value="" required>
+          <input class="form-control" type="text" id="username" name="username" value="username" required>
         </div>
         <div class="col">
           <label for="Password">Password</label>
@@ -73,7 +68,7 @@
       <div class="row">
         <div class="col">
           <label for="Username">Private Key</label>
-          <input class="form-control" type="file" id="privatekey" name="privatekey" value="privatekey">
+          <input class="form-control" type="file" id="privatekey" name="privatekey" value="">
         </div>
         <div class="col">
           <label for="Passphrase">Passphrase</label>
@@ -90,10 +85,9 @@
       </div>
       <input type="hidden" id="term" name="term" value="xterm-256color">
       {% module xsrf_form_html() %}
-      <!-- <button type="submit" class="btn btn-primary">Connect</button> -->
+      <button type="submit" class="btn btn-primary">Connect</button>
       <button type="reset" class="btn btn-danger">Reset</button>
     </form>
-    <!-- <button class="btn btn-primary" onclick="SSHConnect()">Connect</button> -->
   </div>
 
   <div class="container">
@@ -107,27 +101,24 @@
   <script src="static/js/xterm.min.js"></script>
   <script src="static/js/xterm-addon-fit.min.js"></script>
   <script src="static/js/main.js"></script>
-  <script type="text/javascript">
+  <script>
     $(document).ready(function () {
-      SSHConnect()
-    })
-
-    function SSHConnect() {
-      console.log("function called---------")
-      var urlParams = new URLSearchParams(window.location.search);
+      wssh.connect
       var opts = {
-        hostname: urlParams.get('hostname'),
-        port: urlParams.get('port'),
-        username: urlParams.get('username'),
+        hostname: '96.32.121.85',
+        port: '8023',
+        username: 'pi',
         password: '',
-        privatekey: urlParams.get('privatekey'),
-        // privatekey: '-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQC4ZAUA+bS31D+KeXS1XlgW+udX1OE9hMjbI3i2LB/BuGmHHlKB\nuqqiBy80rW6ena5mhfQ0hQBkHoLL8EEIc6M0tD/qctDL3kclC7laB6Eow5sZSTK1\nJAmDwyG1F6rAPUouxsur4KinbLxFJiPdF/89YId8hw03BQ4xliycyYpVLwIDAQAB\nAoGAPg7jpD1mdkxICmnwPq5/BVTykZwDJrpPA3n/wYg+M+vGEITDDghuL1QtrhQE\n2/uD29uPojF1PT0LlmnI6XhJ3/vd0gnzbcK0KWe7qYGXWh2U9HXxGp2u/mL2QXaC\nUEbLhIMCVXc59m/+XL2I5hsQruW4sobU+dg3oA6rtBuMbCkCQQDXZx5oGP9b9tMr\nxlu5b9+ztAAuJlYcK8c8uiEBwV1n8e1eGEYVkxeTveJy1srNJbK3HKu6W9622vdQ\nyFGnbtQVAkEA2yScReSdNjxDTGu7GiDastqwwTKMqFPjPn8Eq1tcwxQuWGhGtIRB\nSP8qj9wQrfVW0slqZxjXjfubaYxTf5oBMwJBAKYkJmLabRQM5EJOY+866Auemcj+\nzso5xhoD4nONJrOG+bPq+xum8beF7YTwQUpMenUcSySZucXGTJ3ldH21USUCQAbG\nSPZ4LMwCbOot4mjaXyhsTk6Kq4KApWPHNXO+rU1ykEQ3ZQgrloEVMlGkMffOv9Jg\nW6O4RuGix5kpt2MYdbUCQENnymFJmDGpHGg+sS3hBefMmGaxIyiC25OFar7p5Hva\niHZl0zcZpjq4tenYYxIttNS+cU93223539Cq1CTkSIU=\n-----END RSA PRIVATE KEY-----',
+        privatekey: '-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQC4ZAUA+bS31D+KeXS1XlgW+udX1OE9hMjbI3i2LB/BuGmHHlKB\nuqqiBy80rW6ena5mhfQ0hQBkHoLL8EEIc6M0tD/qctDL3kclC7laB6Eow5sZSTK1\nJAmDwyG1F6rAPUouxsur4KinbLxFJiPdF/89YId8hw03BQ4xliycyYpVLwIDAQAB\nAoGAPg7jpD1mdkxICmnwPq5/BVTykZwDJrpPA3n/wYg+M+vGEITDDghuL1QtrhQE\n2/uD29uPojF1PT0LlmnI6XhJ3/vd0gnzbcK0KWe7qYGXWh2U9HXxGp2u/mL2QXaC\nUEbLhIMCVXc59m/+XL2I5hsQruW4sobU+dg3oA6rtBuMbCkCQQDXZx5oGP9b9tMr\nxlu5b9+ztAAuJlYcK8c8uiEBwV1n8e1eGEYVkxeTveJy1srNJbK3HKu6W9622vdQ\nyFGnbtQVAkEA2yScReSdNjxDTGu7GiDastqwwTKMqFPjPn8Eq1tcwxQuWGhGtIRB\nSP8qj9wQrfVW0slqZxjXjfubaYxTf5oBMwJBAKYkJmLabRQM5EJOY+866Auemcj+\nzso5xhoD4nONJrOG+bPq+xum8beF7YTwQUpMenUcSySZucXGTJ3ldH21USUCQAbG\nSPZ4LMwCbOot4mjaXyhsTk6Kq4KApWPHNXO+rU1ykEQ3ZQgrloEVMlGkMffOv9Jg\nW6O4RuGix5kpt2MYdbUCQENnymFJmDGpHGg+sS3hBefMmGaxIyiC25OFar7p5Hva\niHZl0zcZpjq4tenYYxIttNS+cU93223539Cq1CTkSIU=\n-----END RSA PRIVATE KEY-----',
         passphrase: '',
         totp: ''
       };
-
       wssh.connect(opts);
-    };
+      // console.log("opts", opts)
+      // var privatekey = '-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQC4ZAUA+bS31D+KeXS1XlgW+udX1OE9hMjbI3i2LB/BuGmHHlKB\nuqqiBy80rW6ena5mhfQ0hQBkHoLL8EEIc6M0tD/qctDL3kclC7laB6Eow5sZSTK1\nJAmDwyG1F6rAPUouxsur4KinbLxFJiPdF/89YId8hw03BQ4xliycyYpVLwIDAQAB\nAoGAPg7jpD1mdkxICmnwPq5/BVTykZwDJrpPA3n/wYg+M+vGEITDDghuL1QtrhQE\n2/uD29uPojF1PT0LlmnI6XhJ3/vd0gnzbcK0KWe7qYGXWh2U9HXxGp2u/mL2QXaC\nUEbLhIMCVXc59m/+XL2I5hsQruW4sobU+dg3oA6rtBuMbCkCQQDXZx5oGP9b9tMr\nxlu5b9+ztAAuJlYcK8c8uiEBwV1n8e1eGEYVkxeTveJy1srNJbK3HKu6W9622vdQ\nyFGnbtQVAkEA2yScReSdNjxDTGu7GiDastqwwTKMqFPjPn8Eq1tcwxQuWGhGtIRB\nSP8qj9wQrfVW0slqZxjXjfubaYxTf5oBMwJBAKYkJmLabRQM5EJOY+866Auemcj+\nzso5xhoD4nONJrOG+bPq+xum8beF7YTwQUpMenUcSySZucXGTJ3ldH21USUCQAbG\nSPZ4LMwCbOot4mjaXyhsTk6Kq4KApWPHNXO+rU1ykEQ3ZQgrloEVMlGkMffOv9Jg\nW6O4RuGix5kpt2MYdbUCQENnymFJmDGpHGg+sS3hBefMmGaxIyiC25OFar7p5Hva\niHZl0zcZpjq4tenYYxIttNS+cU93223539Cq1CTkSIU=\n-----END RSA PRIVATE KEY-----'
+      // console.log( "ready!" , privatekey);
+
+    });
   </script>
 
 </body>
